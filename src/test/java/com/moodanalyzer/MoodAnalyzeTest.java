@@ -31,4 +31,16 @@ public class MoodAnalyzeTest {
         }
 
     }
+    //TC:2.1
+    @Test
+    public void givenNULLMessage_shouldReturnHappy() {
+
+        try {
+            moodAnalyzer = new MoodAnalyser("NULL");
+            Assert.assertEquals("Happy",moodAnalyzer.analyzeMood());
+        } catch (MoodAnalyserException e) {
+            e.printStackTrace();
+        }
+
+    }
 }
