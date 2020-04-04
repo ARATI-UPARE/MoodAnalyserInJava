@@ -21,6 +21,26 @@ public class MoodAnalyzerReflector {
         return null;
     }
 
+    // Return Object of Parameterized Constructor
+    public static MoodAnalyser createMoodAnalyzer(String message){
+        try {
+            Constructor<?> constructor = Class.forName("com.moodanalyser.MoodAnalyser").getConstructor(String.class);
+            return (MoodAnalyser) constructor.newInstance(message);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    //Return Constructor of Passed Class Name And Constructor Name
     public  static  Constructor<?> getConstructor(String className,Class constructor) throws MoodAnalyserException {
         try {
             Class<?> moodAnalyzer = Class.forName(className);

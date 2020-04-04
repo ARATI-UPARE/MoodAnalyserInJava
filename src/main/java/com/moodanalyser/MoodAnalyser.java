@@ -5,9 +5,11 @@ import java.util.Objects;
 public class MoodAnalyser {
     private String message;
 
+    // DEFAULT CONSTRUCTOR
     public MoodAnalyser() {
     }
 
+    // PARAMETRISED CONSTRUCTOR
     public MoodAnalyser(String message){
         this.message=message;
     }
