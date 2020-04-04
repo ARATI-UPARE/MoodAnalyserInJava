@@ -70,21 +70,21 @@ public class MoodAnalyzeTest {
         MoodAnalyser moodAnalyzerReflector = MoodAnalyzerReflector.createMoodAnalyserDefault();
         Assert.assertEquals(new MoodAnalyser(),moodAnalyzerReflector);
     }
-    //TC:4.2
+    //TC:4.2 & TC:5.2 - Method Not Found Exception
     @Test
     public void givenClassName_whenImproper_shouldReturnMoodAnalyzerException() {
         try {
-            MoodAnalyzerReflector.getConstructor("com.moodanalyser.MoodAnalyser",Integer.class);
+            MoodAnalyzerReflector.getConstructor("com.moodanalyser.MoodAnalyser",String.class);
         } catch (MoodAnalyserException e) {
             Assert.assertEquals(MoodAnalyserException.ExceptionType.NO_SUCH_METHOD,e.type);
         }
     }
-    //TC:4.3
+    //TC:4.3 & TC:5.3 - Class Not Found Exception
     @Test
     public void givenClassName_whenConstructorNotProper_shouldReturnMoodAnalyzerException() {
 
         try {
-            MoodAnalyzerReflector.getConstructor("com.moodanalyser.MoodAnalyzer",String.class);
+            MoodAnalyzerReflector.getConstructor("com.moodanalyser.MoodAnalyser",String.class);
         } catch (MoodAnalyserException e) {
             Assert.assertEquals(MoodAnalyserException.ExceptionType.NO_SUCH_CLASS,e.type);
         }
@@ -95,5 +95,29 @@ public class MoodAnalyzeTest {
     public void givenMoodAnalyzerUsingParameterizedConstructor_whenProper_shouldReturnObject() {
         MoodAnalyser moodAnalyzerReflector =  MoodAnalyzerReflector.createMoodAnalyzer("I am In Happy Mood");
         Assert.assertEquals(new MoodAnalyser("I am In Happy Mood"),moodAnalyzerReflector);
+    }
+
+    //6.1
+    @Test
+    public void givenHappyMessageUsingMethodInvoke_whenProper_shouldReturnHappy() {
+        MoodAnalyser moodAnalyzerReflector = MoodAnalyzerReflector.createMoodAnalyzer("I am in Happy Mood");
+        try {
+            String mood = (String) MoodAnalyzerReflector.invokeMethod(moodAnalyzer,"analyzeMood");
+            Assert.assertEquals("Happy",mood);
+        } catch (MoodAnalyserException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //6.2
+    @Test
+    public void givenHappyMessage_whenImproperMethod_shouldReturnException() {
+        MoodAnalyser moodAnalyzerReflector = MoodAnalyzerReflector.createMoodAnalyzer("I am in Happy Mood");
+        try {
+            String mood = (String) MoodAnalyzerReflector.invokeMethod(moodAnalyzer,"analyzeMood1");
+            Assert.assertEquals("Happy",mood);
+        } catch (MoodAnalyserException e) {
+            Assert.assertEquals(MoodAnalyserException.ExceptionType.NO_SUCH_METHOD,e.type);
+        }
     }
 }

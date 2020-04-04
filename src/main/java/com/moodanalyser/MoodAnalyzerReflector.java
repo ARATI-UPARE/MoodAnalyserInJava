@@ -51,4 +51,15 @@ public class MoodAnalyzerReflector {
             throw new MoodAnalyserException(MoodAnalyserException.ExceptionType.NO_SUCH_METHOD,e.getMessage());
         }
     }
+
+    public  static Object invokeMethod(MoodAnalyser moodAnalyzer,String methodName) throws MoodAnalyserException {
+        try {
+            return  moodAnalyzer.getClass().getMethod(methodName).invoke(moodAnalyzer);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            throw new MoodAnalyserException(MoodAnalyserException.ExceptionType.NO_SUCH_METHOD,e.getMessage());
+        }
+        return null;
+    }
 }
