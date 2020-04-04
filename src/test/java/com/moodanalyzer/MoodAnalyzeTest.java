@@ -1,6 +1,7 @@
 package com.moodanalyzer;
 import com.moodanalyser.MoodAnalyser;
 import com.moodanalyser.MoodAnalyserException;
+import com.moodanalyser.MoodAnalyzerReflector;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -42,7 +43,7 @@ public class MoodAnalyzeTest {
             e.printStackTrace();
         }
     }
-    //3.1
+    //TC:3.1
     @Test
     public void givenMood_whenNull_shouldReturnCustomMessage() {
         moodAnalyzer = new MoodAnalyser(null);
@@ -52,7 +53,7 @@ public class MoodAnalyzeTest {
             Assert.assertEquals(MoodAnalyserException.ExceptionType.NULL,e.type);
         }
     }
-    //3.2
+    //TC:3.2
     @Test
     public void givenMood_whenEmpty_shouldReturnCustomMessage() {
         moodAnalyzer = new MoodAnalyser("");
@@ -60,6 +61,32 @@ public class MoodAnalyzeTest {
             moodAnalyzer.analyzeMood();
         } catch (MoodAnalyserException e) {
             Assert.assertEquals(MoodAnalyserException.ExceptionType.EMPTY,e.type);
+        }
+    }
+
+    //TC:4.1
+    @Test
+    public void givenMoodAnalyzerClassUsingDefaultConstructor_whenProper_shouldReturnObject() {
+        MoodAnalyser moodAnalyzerReflector = MoodAnalyzerReflector.createMoodAnalyserDefault();
+        Assert.assertEquals(new MoodAnalyser(),moodAnalyzerReflector);
+    }
+    //TC:4.2
+    @Test
+    public void givenClassName_whenImproper_shouldReturnMoodAnalyzerException() {
+        try {
+            MoodAnalyzerReflector.getConstructor("com.moodanalyser.MoodAnalyser",Integer.class);
+        } catch (MoodAnalyserException e) {
+            Assert.assertEquals(MoodAnalyserException.ExceptionType.NO_SUCH_METHOD,e.type);
+        }
+    }
+    //TC:4.3
+    @Test
+    public void givenClassName_whenConstructorNotProper_shouldReturnMoodAnalyzerException() {
+
+        try {
+            MoodAnalyzerReflector.getConstructor("com.moodanalyser.MoodAnalyzer",String.class);
+        } catch (MoodAnalyserException e) {
+            Assert.assertEquals(MoodAnalyserException.ExceptionType.NO_SUCH_CLASS,e.type);
         }
     }
 }
