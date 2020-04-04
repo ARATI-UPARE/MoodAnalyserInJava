@@ -9,12 +9,14 @@ public class MoodAnalyser {
 
     public String analyzeMood()throws MoodAnalyserException  {
         try {
+            if(message.isEmpty()){
+                throw new MoodAnalyserException(MoodAnalyserException.ExceptionType.EMPTY,"Message is Empty ");
+            }
             if (message.contains("Sad")) {
                 return "Sad";
             }return "Happy";
         }catch (NullPointerException e){
-            e.printStackTrace();
-            return "Happy";
+            throw new MoodAnalyserException(MoodAnalyserException.ExceptionType.NULL,"Null Message");
         }
     }
 }

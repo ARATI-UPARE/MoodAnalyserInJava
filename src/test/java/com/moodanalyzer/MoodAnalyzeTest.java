@@ -41,6 +41,25 @@ public class MoodAnalyzeTest {
         } catch (MoodAnalyserException e) {
             e.printStackTrace();
         }
-
+    }
+    //3.1
+    @Test
+    public void givenMood_whenNull_shouldReturnCustomMessage() {
+        moodAnalyzer = new MoodAnalyser(null);
+        try {
+            moodAnalyzer.analyzeMood();
+        } catch (MoodAnalyserException e) {
+            Assert.assertEquals(MoodAnalyserException.ExceptionType.NULL,e.type);
+        }
+    }
+    //3.2
+    @Test
+    public void givenMood_whenEmpty_shouldReturnCustomMessage() {
+        moodAnalyzer = new MoodAnalyser("");
+        try {
+            moodAnalyzer.analyzeMood();
+        } catch (MoodAnalyserException e) {
+            Assert.assertEquals(MoodAnalyserException.ExceptionType.EMPTY,e.type);
+        }
     }
 }
